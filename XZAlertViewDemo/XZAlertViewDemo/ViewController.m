@@ -7,60 +7,47 @@
 
 #import "ViewController.h"
 #import "XZAlertActionView.h"
+#import "CustomView.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;///<<#des#>
 @property (nonatomic, strong) NSArray *allTititleArray;///<<#des#>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *backgroundStyleSeg;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *viewTypeSeg;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *showInViewSeg;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:self.tableView];
-    self.allTititleArray = @[
+
+- (IBAction)show:(id)sender {
     
-        @"中间弹出",
-        @"底部弹出",
-    ];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    // Do any additional setup after loading the view.
-}
+    UIView *redView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+    redView.backgroundColor = UIColor.redColor;
+    NSInteger type = 1 << (self.segView.selectedSegmentIndex + 1);
+    XZAlertActionView *alert = [[XZAlertActionView alloc] initWithCustomView:redView style:type];
+    alert.allowTapBackgroundDismiss = YES;
+    alert.backgroundStyle = 1 << (self.backgroundStyleSeg.selectedSegmentIndex + 1);
+    if (self.viewTypeSeg.selectedSegmentIndex == 0) {
+        alert.showInView = self.tableView;
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.allTititleArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    cell.textLabel.text = self.allTititleArray[indexPath.row];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0: {
-            UIView *redView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
-            redView.backgroundColor = UIColor.redColor;
-            XZAlertActionView *alert = [[XZAlertActionView alloc] initWithCustomView:redView style:XZActionAlertViewTransitionStyleBottomEject];
-            alert.allowTapBackgroundDismiss = YES;
-            [alert show];
-        }
-            break;
-        case 1: {
-            UIView *redView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
-            redView.backgroundColor = UIColor.redColor;
-            XZAlertActionView *alert = [[XZAlertActionView alloc] initWithCustomView:redView style:XZActionAlertViewTransitionStyleDropDown];
-            alert.allowTapBackgroundDismiss = YES;
-            alert.showInView = self.tableView;
-            [alert show];
-        }
-            break;
-        default:
-            break;
+    }else {
+        CustomView *ctView = [[CustomView alloc] init];
+        
+        ctView.backgroundColor = UIColor.whiteColor;
+        ctView.detailLB.text= @"实力对抗肌肤拉开大煞风景阿克琉斯觉得反馈啦见识到风口浪尖阿斯科利的风景阿克琉斯大家反馈啦及时的反馈啦就是快乐的风景阿克琉斯大家反馈啦绝世独立封口机阿斯科利的飞机啊";
+        alert.customView = ctView;
+        
     }
+    if (self.showInViewSeg.selectedSegmentIndex == 0) {
+        alert.showInView = self.bottomView;
+    }
+    
+    [alert show];
+
 }
+
 
 @end

@@ -16,6 +16,7 @@
 		A11143C9264D115C00FE91DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143C8264D115C00FE91DD /* main.m */; };
 		A11143EA264D165800FE91DD /* XZAlertActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143E8264D165800FE91DD /* XZAlertActionView.m */; };
 		A11143EB264D165800FE91DD /* XZAlertPopUpManage.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143E9264D165800FE91DD /* XZAlertPopUpManage.m */; };
+		A11143F1264D3AFE00FE91DD /* CustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143F0264D3AFE00FE91DD /* CustomView.m */; };
 		C6448AA1C3A2C6939AD0AAFB /* Pods_XZAlertViewDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB0D11F33E85A7C01637704 /* Pods_XZAlertViewDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,8 @@
 		A11143E7264D165800FE91DD /* XZAlertActionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZAlertActionHeader.h; sourceTree = "<group>"; };
 		A11143E8264D165800FE91DD /* XZAlertActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZAlertActionView.m; sourceTree = "<group>"; };
 		A11143E9264D165800FE91DD /* XZAlertPopUpManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZAlertPopUpManage.m; sourceTree = "<group>"; };
+		A11143EF264D3AFD00FE91DD /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
+		A11143F0264D3AFE00FE91DD /* CustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 				A11143C4264D115C00FE91DD /* LaunchScreen.storyboard */,
 				A11143C7264D115C00FE91DD /* Info.plist */,
 				A11143C8264D115C00FE91DD /* main.m */,
+				A11143EF264D3AFD00FE91DD /* CustomView.h */,
+				A11143F0264D3AFE00FE91DD /* CustomView.m */,
 			);
 			path = XZAlertViewDemo;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				A11143B8264D115900FE91DD /* AppDelegate.m in Sources */,
 				A11143C9264D115C00FE91DD /* main.m in Sources */,
 				A11143EA264D165800FE91DD /* XZAlertActionView.m in Sources */,
+				A11143F1264D3AFE00FE91DD /* CustomView.m in Sources */,
 				A11143EB264D165800FE91DD /* XZAlertPopUpManage.m in Sources */,
 				A11143BB264D115900FE91DD /* SceneDelegate.m in Sources */,
 			);

@@ -271,8 +271,13 @@ static XZAlertActionView *__hd_current_view;
 ////    }
     [self.showInView addSubview:self];
     
-    self.frame = [UIScreen mainScreen].bounds;
-    self.bgView.frame = [UIScreen mainScreen].bounds;
+    if (self.showInView) {
+        self.frame = self.showInView.bounds;
+        self.bgView.frame = self.showInView.bounds;
+    } else {
+        self.frame = [UIScreen mainScreen].bounds;
+        self.bgView.frame = [UIScreen mainScreen].bounds;
+    }
     [self addSubview:self.bgView];
     // 如果包含自定义弹窗则
     NSAssert(self.customView, @"自定义弹窗视图不能为空");
@@ -293,8 +298,13 @@ static XZAlertActionView *__hd_current_view;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.frame = [UIScreen mainScreen].bounds;
-    self.bgView.frame = [UIScreen mainScreen].bounds;
+//    if (self.showInView) {
+//        self.frame = self.showInView.bounds;
+//        self.bgView.frame = self.showInView.bounds;
+//    } else {
+//        self.frame = [UIScreen mainScreen].bounds;
+//        self.bgView.frame = [UIScreen mainScreen].bounds;
+//    }
 }
 
 - (void)updateConstraints {
@@ -309,8 +319,10 @@ static XZAlertActionView *__hd_current_view;
                 make.center.equalTo(self);
             }];
         }
-        
     }
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.showInView);
+    }];
 }
 
 - (void)showBackground {
@@ -416,7 +428,6 @@ static XZAlertActionView *__hd_current_view;
             [self layoutIfNeeded];
             [UIView animateWithDuration:self.displayDuring animations:^{
                 [self.customView  mas_updateConstraints:^(MASConstraintMaker *make) {
-                    
                     make.bottom.mas_equalTo(-kBottomSafeHeight);
                 }];
                 [self layoutIfNeeded];
@@ -425,6 +436,7 @@ static XZAlertActionView *__hd_current_view;
             break;
     }
 }
+
 
 - (void)transitionOutCompletion:(void (^)(void))completion {
     UIView *view = self.customView ;

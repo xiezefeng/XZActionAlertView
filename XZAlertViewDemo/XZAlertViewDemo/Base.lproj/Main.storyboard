@@ -1,24 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bTa-st-KgY">
+                                <rect key="frame" x="0.0" y="20" width="414" height="32"/>
+                                <segments>
+                                    <segment title="反弹缩放"/>
+                                    <segment title="透明变化"/>
+                                    <segment title="动画下落"/>
+                                    <segment title="顶部滑出"/>
+                                    <segment title="底部滑出"/>
+                                    <segment title="底部弹出"/>
+                                </segments>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zam-qO-Vat">
+                                <rect key="frame" x="0.0" y="81" width="414" height="32"/>
+                                <segments>
+                                    <segment title="自定义视图"/>
+                                    <segment title="随机视图"/>
+                                </segments>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MAe-th-yqx">
+                                <rect key="frame" x="-6" y="146" width="414" height="32"/>
+                                <segments>
+                                    <segment title="半透明"/>
+                                    <segment title="渐变灰色"/>
+                                </segments>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9H-dw-drd">
+                                <rect key="frame" x="0.0" y="336" width="414" height="400"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bottomView" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q71-Lc-hyJ">
+                                        <rect key="frame" x="0.0" y="100" width="414" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstItem="Q71-Lc-hyJ" firstAttribute="top" secondItem="P9H-dw-drd" secondAttribute="top" constant="100" id="1ci-Ak-PoT"/>
+                                    <constraint firstItem="Q71-Lc-hyJ" firstAttribute="leading" secondItem="P9H-dw-drd" secondAttribute="leading" id="3SI-nZ-BXa"/>
+                                    <constraint firstAttribute="height" constant="400" id="4eT-E7-vLU"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q71-Lc-hyJ" secondAttribute="trailing" id="CmY-YR-8g9"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="sQB-x8-9JP">
+                                <rect key="frame" x="0.0" y="196" width="414" height="32"/>
+                                <segments>
+                                    <segment title="window"/>
+                                    <segment title="展示于bottomView上"/>
+                                </segments>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MME-ui-oa5">
+                                <rect key="frame" x="0.0" y="270" width="414" height="30"/>
+                                <state key="normal" title="点击弹窗"/>
+                                <connections>
+                                    <action selector="show:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kwn-X1-d9b"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zam-qO-Vat" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6s3-XM-Ho9"/>
+                            <constraint firstItem="sQB-x8-9JP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7IU-Ua-Gaa"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="AbZ-A3-5wT"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="D3c-n2-2uK"/>
+                            <constraint firstItem="MAe-th-yqx" firstAttribute="top" secondItem="zam-qO-Vat" secondAttribute="bottom" constant="34" id="Dlt-Kp-TDi"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PPq-HK-d9D"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Se3-ci-Sx5"/>
+                            <constraint firstItem="sQB-x8-9JP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="W2i-zA-UvP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MAe-th-yqx" secondAttribute="trailing" constant="6" id="YMD-5t-gJI"/>
+                            <constraint firstItem="P9H-dw-drd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aod-WN-Oaa"/>
+                            <constraint firstItem="MAe-th-yqx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-6" id="b6I-Q3-WF5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zam-qO-Vat" secondAttribute="trailing" id="dvV-ke-FQH"/>
+                            <constraint firstItem="sQB-x8-9JP" firstAttribute="top" secondItem="MAe-th-yqx" secondAttribute="bottom" constant="19" id="hW0-F7-05z"/>
+                            <constraint firstItem="P9H-dw-drd" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="iM2-GM-wOb"/>
+                            <constraint firstItem="zam-qO-Vat" firstAttribute="top" secondItem="bTa-st-KgY" secondAttribute="bottom" constant="30" id="k1m-Yv-3SZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MME-ui-oa5" secondAttribute="trailing" id="ki2-Ig-QBA"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ogc-aw-2dr"/>
+                            <constraint firstItem="MME-ui-oa5" firstAttribute="top" secondItem="sQB-x8-9JP" secondAttribute="bottom" constant="43" id="qZ9-5Z-DsD"/>
+                            <constraint firstItem="bTa-st-KgY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rTo-rW-mQG"/>
+                            <constraint firstItem="MME-ui-oa5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uwu-mg-2yI"/>
+                            <constraint firstItem="P9H-dw-drd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vD6-5R-tml"/>
+                        </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="backgroundStyleSeg" destination="MAe-th-yqx" id="jo0-SA-lQI"/>
+                        <outlet property="bottomView" destination="P9H-dw-drd" id="6MF-jY-sID"/>
+                        <outlet property="segView" destination="bTa-st-KgY" id="oV3-WV-LhB"/>
+                        <outlet property="showInViewSeg" destination="sQB-x8-9JP" id="hGj-vD-omN"/>
+                        <outlet property="viewTypeSeg" destination="zam-qO-Vat" id="u7z-Qg-o6E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-2181" y="-18"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
