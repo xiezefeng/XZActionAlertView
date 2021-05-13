@@ -414,7 +414,7 @@ static XZAlertActionView *__hd_current_view;
             [UIView animateWithDuration:self.displayDuring animations:^{
                 [self.customView  mas_updateConstraints:^(MASConstraintMaker *make) {
                     
-                    make.bottom.mas_equalTo([UIApplication sharedApplication].delegate.window.safeAreaInsets.bottom);
+                    make.bottom.mas_equalTo(kBottomSafeHeight);
                 }];
                 [self layoutIfNeeded];
             }];

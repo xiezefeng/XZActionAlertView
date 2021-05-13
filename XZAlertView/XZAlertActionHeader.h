@@ -50,4 +50,12 @@ typedef NS_ENUM(NSInteger, XZActionAlertViewBackgroundStyle) {
 #define dispatch_main_async_safe(block) dispatch_queue_async_safe(dispatch_get_main_queue(), block)
 #endif
 
+#define kIs_iphone ([[UIDevice currentDevice].model isEqual:@"iPhone"])
+
+#define kIs_iPhoneX kScreenWidth >=375.0f && kScreenHeight >=812.0f&& kIs_iphone
+/*顶部安全区域远离高度*/
+#define kTopBarSafeHeight (CGFloat)(kIs_iPhoneX?(44.0):(0))
+/*底部安全区域远离高度*/
+#define kBottomSafeHeight (CGFloat)(kIs_iPhoneX?(34.0):(0))
+
 #endif /* XZAlertActionHeader_h */
