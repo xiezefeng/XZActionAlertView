@@ -103,10 +103,10 @@
 		A11143E4264D165800FE91DD /* XZAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				A11143E5264D165800FE91DD /* XZAlertPopUpManage.h */,
-				A11143E6264D165800FE91DD /* XZAlertActionView.h */,
 				A11143E7264D165800FE91DD /* XZAlertActionHeader.h */,
+				A11143E6264D165800FE91DD /* XZAlertActionView.h */,
 				A11143E8264D165800FE91DD /* XZAlertActionView.m */,
+				A11143E5264D165800FE91DD /* XZAlertPopUpManage.h */,
 				A11143E9264D165800FE91DD /* XZAlertPopUpManage.m */,
 			);
 			name = XZAlertView;

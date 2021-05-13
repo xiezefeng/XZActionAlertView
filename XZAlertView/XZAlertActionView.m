@@ -407,6 +407,9 @@ static XZAlertActionView *__hd_current_view;
         case XZActionAlertViewTransitionStyleBottomEject:
         {
             [self.customView mas_makeConstraints:^(MASConstraintMaker *make) {
+                if (self.customView.bounds.size.height) {
+                    make.size.mas_equalTo(self.customView.bounds.size);
+                }
                 make.bottom.mas_equalTo(kScreenHeight/2);
                 make.centerX.equalTo(self.bgView.mas_centerX);
             }];
@@ -414,7 +417,7 @@ static XZAlertActionView *__hd_current_view;
             [UIView animateWithDuration:self.displayDuring animations:^{
                 [self.customView  mas_updateConstraints:^(MASConstraintMaker *make) {
                     
-                    make.bottom.mas_equalTo(kBottomSafeHeight);
+                    make.bottom.mas_equalTo(-kBottomSafeHeight);
                 }];
                 [self layoutIfNeeded];
             }];
