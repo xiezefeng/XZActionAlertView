@@ -62,11 +62,23 @@
 
 @interface XZAlertActionView()<CAAnimationDelegate,UIGestureRecognizerDelegate>
 @property (strong,nonatomic) XZAlertActionBackgroundView *bgView;
-@property (nonatomic, assign) BOOL visible;                    // 是否正在显示
+///<关闭按钮
+@property (nonatomic, strong) UIButton *closeButton;
+/// 是否正在显示
+@property (nonatomic, assign) BOOL visible;
 
 @end
 
 @implementation XZAlertActionView
++ (instancetype)actionAlertViewWithCustomView:(UIView *)customView config:(XZAlertActionConfig *)config {
+
+    XZAlertActionView *actionView = [[XZAlertActionView alloc] init];
+    actionView.customView = customView;
+    if (config) {
+        actionView.config = config;
+    }
+    return actionView;
+}
 
 + (instancetype)actionAlertViewWithCustomView:(UIView *)customView style:(XZActionAlertViewTransitionStyle)style {
     return [[self alloc] initWithCustomView:customView style:style];
@@ -75,11 +87,11 @@
 - (instancetype)initWithCustomView:(UIView *)customView style:(XZActionAlertViewTransitionStyle)style {
     if (self = [super init]) {
         self.customView = customView;
-        self.transitionStyle = style;
+        self.config.transitionStyle = style;
         self.bgView.style = XZActionAlertViewBackgroundStyleSolid;
-        _allowTapBackgroundDismiss = NO;
-        self.displayDuring = 0.4;
-        self.disappearDuring = 0.3;
+        self.config.allowTapBackgroundDismiss = NO;
+        self.config.displayDuring = 0.4;
+        self.config.disappearDuring = 0.3;
 
     }
     return self;
@@ -91,11 +103,11 @@
 
 - (instancetype)initWithAnimationStyle:(XZActionAlertViewTransitionStyle)style {
     if (self = [super init]) {
-        self.transitionStyle = style;
-        _allowTapBackgroundDismiss = NO;
+        self.config.transitionStyle = style;
+        self.config.allowTapBackgroundDismiss = NO;
         self.bgView.style = XZActionAlertViewBackgroundStyleSolid;
-        self.displayDuring = 0.4;
-        self.disappearDuring = 0.3;
+        self.config.displayDuring = 0.4;
+        self.config.disappearDuring = 0.3;
 
     }
     return self;
@@ -117,8 +129,10 @@
 
 
 
-// 展示和消失
+/// 展示和消失
 - (void)_dismiss {
+
+    _closeButton.hidden = YES;
     if (self.willDismissHandler) {
         self.willDismissHandler(self);
     }else if (self.delegate && [self.delegate respondsToSelector:@selector(actionAlertViewWillDismiss:)]) {
@@ -152,27 +166,8 @@
 }
 
 - (void)dismissCompletion:(void (^__nullable)(void))completion{
-    
-//    [[XZAlertPopUpManage sharedAlertPopUpManage] removeAlertAction:self];
-//    if (completion) {
-//        [self transitionOutCompletion:completion];
-//    }else {
-//        void (^dismissComplete)(void) = ^{
-//
-//            [XZAlertActionView setAnimating:NO];
-//            [XZAlertActionView setCurrentAlertView:nil];
-//            [self removeFromSuperview];
-//            [self teardown];
-//
-//            if ([XZAlertPopUpManage alertActionsCount] > 0 && [XZAlertPopUpManage sharedAlertPopUpManage].isShowNext) {
-//                XZAlertActionView *alertView = [XZAlertPopUpManage sharedAlertPopUpManage].alertActionList.firstObject;
-//                [alertView show];
-//            }
-//        };
-
     [self dismisXZackground];
     [self transitionOutCompletion:completion];
-//    }
 }
 
 - (void)teardown {
@@ -191,19 +186,16 @@
     //加锁
     @synchronized ([XZAlertPopUpManage sharedAlertPopUpManage]) {
         if (self.isVisible) { //是否正在展示
-//            NSLog(@"弹窗还在展示中...........");
             return;
         }
         if (![[XZAlertPopUpManage sharedAlertPopUpManage].alertActionList containsObject:self]) {
             [[XZAlertPopUpManage sharedAlertPopUpManage] addAlertAction:self];
         }
-//        NSLog(@"[XZAlertPopUpManage sharedAlertPopUpManage].priorityFollowingUnDisplay   %lu",(unsigned long)[XZAlertPopUpManage sharedAlertPopUpManage].priorityFollowingUnDisplay);
         //优先级过低不展示
         if ([XZAlertPopUpManage sharedAlertPopUpManage].priorityFollowingUnDisplay > self.displayPriority) {
             return;
         }
         if ([XZAlertActionView isAnimating]) { //当前已经有弹窗
-//            NSLog(@"当前动画还===========未结束");
             return;
         }else {
             if (self.willShowHandler) {
@@ -214,7 +206,7 @@
             self.visible = YES;
             [XZAlertActionView setAnimating:YES];
             [XZAlertActionView setCurrentAlertView:self];
-            [self setUp];
+            [self setUpSubViews];
             [self showBackground];
             [self transitionInCompletion:^{
                 if (self.didShowHandler) {
@@ -223,7 +215,6 @@
                     [self.delegate actionAlertViewDidShow:self];
                 }
             }];
-//            NSLog(@"弹窗展示%@===========成功",[self.customView class]);
         }
     }
 }
@@ -250,25 +241,8 @@ static XZAlertActionView *__hd_current_view;
     __hd_current_view = alertView;
 }
 
-- (void)setUp {
+- (void)setUpSubViews {
  
-//    UIWindow* window = nil;
-////    if (@available(iOS 13.0, *))
-////    {
-////        for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes)
-////        {
-////            if (windowScene.activationState == UISceneActivationStateForegroundActive)
-////            {
-////                window = windowScene.windows.firstObject;
-////                break;
-////            }
-////        }
-////    }else{
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-//        window = [UIApplication sharedApplication].keyWindow;
-//#pragma clang diagnostic pop
-////    }
     [self.showInView addSubview:self];
     
     if (self.showInView) {
@@ -279,6 +253,7 @@ static XZAlertActionView *__hd_current_view;
         self.bgView.frame = [UIScreen mainScreen].bounds;
     }
     [self addSubview:self.bgView];
+
     // 如果包含自定义弹窗则
     NSAssert(self.customView, @"自定义弹窗视图不能为空");
 
@@ -286,7 +261,7 @@ static XZAlertActionView *__hd_current_view;
     if (self.customView.frame.size.height) {
         self.customView.center = self.center;
     }else {
-        if (self.transitionStyle == XZActionAlertViewTransitionStyleBottomEject) {
+        if (self.config.transitionStyle == XZActionAlertViewTransitionStyleBottomEject) {
             
         }else {
             [self.customView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -294,42 +269,46 @@ static XZAlertActionView *__hd_current_view;
             }];
         }
     }
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-//    if (self.showInView) {
-//        self.frame = self.showInView.bounds;
-//        self.bgView.frame = self.showInView.bounds;
-//    } else {
-//        self.frame = [UIScreen mainScreen].bounds;
-//        self.bgView.frame = [UIScreen mainScreen].bounds;
-//    }
-}
-
-- (void)updateConstraints {
-    [super updateConstraints];
-    if (self.customView.frame.size.height) {
-        self.customView.center = self.center;
-    }else {
-        if (self.transitionStyle == XZActionAlertViewTransitionStyleBottomEject) {
-            
-        }else {
-            [self.customView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
-            }];
-        }
-    }
+    
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self.showInView);
     }];
+
+    if (self.config.isShowCloseBtn) {
+        [self addSubview:self.closeButton];
+        [self.closeButton setImage:self.config.closeBtnImage forState:UIControlStateNormal];
+        [self.closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            if (self.config.closeStyle == XZActionAlertViewCloseStyleRightTop) {
+                make.left.equalTo(self.customView.mas_right).offset(self.config.closeBtnMargin);
+                make.bottom.equalTo(self.customView.mas_top).offset(-self.config.closeBtnMargin);
+
+            }else {
+                make.top.equalTo(self.customView.mas_bottom).offset(self.config.closeBtnMargin);
+                make.centerX.equalTo(self.customView);
+            }
+            make.size.mas_equalTo(self.config.closeSize);
+        }];
+    }
+    
+    
 }
+
+
+- (UIButton *)closeButton {
+    if (!_closeButton) {
+        _closeButton =  [[UIButton alloc] init];
+        [_closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _closeButton;
+}
+
 
 - (void)showBackground {
         dispatch_main_async_safe(^{
             self.bgView.frame = [UIScreen mainScreen].bounds;
             self.bgView.alpha = 0;
-            [UIView animateWithDuration:self.displayDuring
+            self.bgView.style = self.config.backgroundStyle;
+            [UIView animateWithDuration:self.config.displayDuring
                              animations:^{
                                  self.bgView.alpha = 1;
                              }];
@@ -339,7 +318,7 @@ static XZAlertActionView *__hd_current_view;
 - (void)dismisXZackground {
     dispatch_main_async_safe(^{
         self.bgView.frame = [UIScreen mainScreen].bounds;
-        [UIView animateWithDuration:self.disappearDuring
+        [UIView animateWithDuration:self.config.disappearDuring
                          animations:^{
                              self.bgView.alpha = 0;
         }completion:^(BOOL finished) {
@@ -352,7 +331,7 @@ static XZAlertActionView *__hd_current_view;
 - (void)transitionInCompletion:(void (^)(void))completion {
     
     UIView *view = self.customView;
-    switch (self.transitionStyle) {
+    switch (self.config.transitionStyle) {
         case XZActionAlertViewTransitionStyleSlideFromBottom: {
             CGRect rect = view.frame;
             CGRect originalRect = rect;
@@ -372,7 +351,7 @@ static XZAlertActionView *__hd_current_view;
             CGRect originalRect = rect;
             rect.origin.y = -rect.size.height;
             view.frame = rect;
-            [UIView animateWithDuration:self.displayDuring
+            [UIView animateWithDuration:self.config.displayDuring
                              animations:^{
                                  view.frame = originalRect;
                              }
@@ -383,7 +362,7 @@ static XZAlertActionView *__hd_current_view;
             
         case XZActionAlertViewTransitionStyleFade: {
             view.alpha = 0;
-            [UIView animateWithDuration:self.displayDuring
+            [UIView animateWithDuration:self.config.displayDuring
                              animations:^{
                                  view.alpha = 1;
                              }
@@ -397,7 +376,7 @@ static XZAlertActionView *__hd_current_view;
             animation.values = @[@(0.01), @(1.3), @(0.8), @(1.2), @(1)];
             animation.keyTimes = @[@(0), @(0.4), @(0.6), @(0.8), @(1)];
             animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-            animation.duration = self.displayDuring;
+            animation.duration = self.config.displayDuring;
             animation.delegate = self;
             [animation setValue:completion forKey:@"handler"];
             [view.layer addAnimation:animation forKey:@"bouce"];
@@ -410,7 +389,7 @@ static XZAlertActionView *__hd_current_view;
             animation.values = @[@(y - self.bounds.size.height), @(y + 20), @(y - 10), @(y)];
             animation.keyTimes = @[@(0), @(0.5), @(0.75), @(1)];
             animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-            animation.duration = self.displayDuring;
+            animation.duration = self.config.displayDuring;
             animation.delegate = self;
             [animation setValue:completion forKey:@"handler"];
             [view.layer addAnimation:animation forKey:@"dropdown"];
@@ -426,9 +405,15 @@ static XZAlertActionView *__hd_current_view;
                 make.centerX.equalTo(self.bgView.mas_centerX);
             }];
             [self layoutIfNeeded];
-            [UIView animateWithDuration:self.displayDuring animations:^{
+            [UIView animateWithDuration:self.config.displayDuring animations:^{
                 [self.customView  mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.mas_equalTo(-kBottomSafeHeight);
+                    CGFloat bottomMargin = self.config.bottomMargin;
+                                      
+                    if (self.config.isShowCloseBtn && self.config.closeStyle == XZActionAlertViewCloseStyleBottom) {
+                        bottomMargin += - self.config.closeBtnMargin - self.config.closeSize.height;
+                    }
+                    make.bottom.mas_equalTo(bottomMargin);
+
                 }];
                 [self layoutIfNeeded];
             }];
@@ -441,11 +426,11 @@ static XZAlertActionView *__hd_current_view;
 - (void)transitionOutCompletion:(void (^)(void))completion {
     UIView *view = self.customView ;
 
-    switch (self.transitionStyle) {
+    switch (self.config.transitionStyle) {
         case XZActionAlertViewTransitionStyleSlideFromBottom: {
             CGRect rect = view.frame;
             rect.origin.y = self.bounds.size.height;
-                [UIView animateWithDuration:self.disappearDuring delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                [UIView animateWithDuration:self.config.disappearDuring delay:0.f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                     view.frame = rect;
                 } completion:^(BOOL finished) {
                     !completion ?: completion();
@@ -457,7 +442,7 @@ static XZAlertActionView *__hd_current_view;
         case XZActionAlertViewTransitionStyleSlideFromTop: {
             CGRect rect = view.frame;
             rect.origin.y = -rect.size.height;
-            [UIView animateWithDuration:self.disappearDuring
+            [UIView animateWithDuration:self.config.disappearDuring
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseIn
                              animations:^{
@@ -469,7 +454,7 @@ static XZAlertActionView *__hd_current_view;
         } break;
             
         case XZActionAlertViewTransitionStyleFade: {
-            [UIView animateWithDuration:self.disappearDuring
+            [UIView animateWithDuration:self.config.disappearDuring
                              animations:^{
                                  view.alpha = 0;
                              }
@@ -483,7 +468,7 @@ static XZAlertActionView *__hd_current_view;
             animation.values = @[@(1), @(1.2), @(0.01)];
             animation.keyTimes = @[@(0), @(0.4), @(1)];
             animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut], [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
-            animation.duration = self.disappearDuring;
+            animation.duration = self.config.disappearDuring;
             animation.delegate = self;
             [animation setValue:completion forKey:@"handler"];
             [view.layer addAnimation:animation forKey:@"bounce"];
@@ -494,7 +479,7 @@ static XZAlertActionView *__hd_current_view;
         case XZActionAlertViewTransitionStyleDropDown: {
             CGPoint point = view.center;
             point.y += self.bounds.size.height;
-            [UIView animateWithDuration:self.disappearDuring
+            [UIView animateWithDuration:self.config.disappearDuring
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseIn
                              animations:^{
@@ -510,7 +495,7 @@ static XZAlertActionView *__hd_current_view;
         case XZActionAlertViewTransitionStyleBottomEject:
         {
 
-            [UIView animateWithDuration:self.disappearDuring animations:^{
+            [UIView animateWithDuration:self.config.disappearDuring animations:^{
                 [self.customView  mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.bottom.mas_equalTo(self.customView.frame.size.height);
                     make.centerX.equalTo(self.mas_centerX);
@@ -550,14 +535,12 @@ static XZAlertActionView *__hd_current_view;
     } else if (self.delegate && [self.delegate respondsToSelector:@selector(actionAlertViewDidTappedBackGroundView:)]) {
         [self.delegate actionAlertViewDidTappedBackGroundView:self];
     }
-    if (_allowTapBackgroundDismiss) {
+    if (self.config.allowTapBackgroundDismiss) {
         [self dismiss];
     }
 }
 
-- (void)setBackgroundStyle:(XZActionAlertViewBackgroundStyle)backgroundStyle {
-    self.bgView.style = backgroundStyle;
-}
+
 
 - (XZAlertActionBackgroundView *)bgView {
     if (!_bgView) {
@@ -581,9 +564,17 @@ static XZAlertActionView *__hd_current_view;
     return _showInView;
 }
 
+- (XZAlertActionConfig *)config {
+    if (!_config) {
+        _config = [[XZAlertActionConfig alloc] init];
+    }
+    return _config;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"弹窗销毁====%@",[self.customView class]);
 }
+
+
 
 @end

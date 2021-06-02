@@ -10,8 +10,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomView : UIView
-@property (nonatomic, strong) UILabel *detailLB;///<<#des#>
-
+@property (nonatomic, strong) UILabel *detailLB;///<
+@property (nonatomic, copy) void(^dism)(void);
 @end
 
 NS_ASSUME_NONNULL_END

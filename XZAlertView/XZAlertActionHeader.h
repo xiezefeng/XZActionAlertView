@@ -10,19 +10,15 @@
 #define XZAlertActionHeader_h
 #import <Masonry/Masonry.h>
 
-/// 显示优先级
-typedef NS_ENUM(NSUInteger, XZDisplayPriority) {
-    XZDisplayPriorityDefault = 0, // 默认 可以移除弹窗
-    XZDisplayPriorityWordCommand, //口令
-    XZDisplayPriorityForcedNoRemove = 100 , //大于不可移除弹窗
-    XZDisplayPriorityAgreement, //协议
-    XZDisplayPriorityForceUpdate, //强制更新
+typedef NS_ENUM(NSInteger, XZActionAlertViewCloseStyle) {
+    XZActionAlertViewCloseStyleBottom       = 1 << 1,               ///< 底部
+    XZActionAlertViewCloseStyleRightTop        = 1 << 2,              ///< 右上角
 };
 
 /** 动画效果 */
 typedef NS_ENUM(NSInteger, XZActionAlertViewTransitionStyle) {
-    XZActionAlertViewTransitionStyleBounce       = 1 << 1,               ///< 反弹缩放
-    XZActionAlertViewTransitionStyleFade        = 1 << 2,              ///< 透明度变化
+    XZActionAlertViewTransitionStyleFade        = 1 << 1,              ///< 透明度变化
+    XZActionAlertViewTransitionStyleBounce       = 1 << 2,               ///< 反弹缩放
     XZActionAlertViewTransitionStyleDropDown     = 1 << 3,             ///< 物理动画下落
     XZActionAlertViewTransitionStyleSlideFromTop = 1 << 4,         ///< 顶部滑出
     XZActionAlertViewTransitionStyleSlideFromBottom = 1 << 5,      ///< 底部滑出
@@ -50,12 +46,12 @@ typedef NS_ENUM(NSInteger, XZActionAlertViewBackgroundStyle) {
 #define dispatch_main_async_safe(block) dispatch_queue_async_safe(dispatch_get_main_queue(), block)
 #endif
 
-#define kIs_iphone ([[UIDevice currentDevice].model isEqual:@"iPhone"])
-
-#define kIs_iPhoneX kScreenWidth >=375.0f && kScreenHeight >=812.0f&& kIs_iphone
-/*顶部安全区域远离高度*/
-#define kTopBarSafeHeight (CGFloat)(kIs_iPhoneX?(44.0):(0))
-/*底部安全区域远离高度*/
-#define kBottomSafeHeight (CGFloat)(kIs_iPhoneX?(34.0):(0))
+//#define kIs_iphone ([[UIDevice currentDevice].model isEqual:@"iPhone"])
+//
+//#define kIs_iPhoneX kScreenWidth >=375.0f && kScreenHeight >=812.0f&& kIs_iphone
+///*顶部安全区域远离高度*/
+//#define kTopBarSafeHeight (CGFloat)(kIs_iPhoneX?(44.0):(0))
+///*底部安全区域远离高度*/
+//#define kBottomSafeHeight (CGFloat)(kIs_iPhoneX?(34.0):(0))
 
 #endif /* XZAlertActionHeader_h */

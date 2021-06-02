@@ -17,6 +17,8 @@
 		A11143EA264D165800FE91DD /* XZAlertActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143E8264D165800FE91DD /* XZAlertActionView.m */; };
 		A11143EB264D165800FE91DD /* XZAlertPopUpManage.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143E9264D165800FE91DD /* XZAlertPopUpManage.m */; };
 		A11143F1264D3AFE00FE91DD /* CustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = A11143F0264D3AFE00FE91DD /* CustomView.m */; };
+		A1A1505E266646E900FE0A5D /* XZAlertActionView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A1A1505D266646E900FE0A5D /* XZAlertActionView.bundle */; };
+		A1A1506226671CDC00FE0A5D /* XZAlertActionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A1506126671CDC00FE0A5D /* XZAlertActionConfig.m */; };
 		C6448AA1C3A2C6939AD0AAFB /* Pods_XZAlertViewDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB0D11F33E85A7C01637704 /* Pods_XZAlertViewDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,9 @@
 		A11143E9264D165800FE91DD /* XZAlertPopUpManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZAlertPopUpManage.m; sourceTree = "<group>"; };
 		A11143EF264D3AFD00FE91DD /* CustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
 		A11143F0264D3AFE00FE91DD /* CustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomView.m; sourceTree = "<group>"; };
+		A1A1505D266646E900FE0A5D /* XZAlertActionView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = XZAlertActionView.bundle; sourceTree = "<group>"; };
+		A1A1506026671CDC00FE0A5D /* XZAlertActionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XZAlertActionConfig.h; sourceTree = "<group>"; };
+		A1A1506126671CDC00FE0A5D /* XZAlertActionConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XZAlertActionConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +113,10 @@
 		A11143E4264D165800FE91DD /* XZAlertView */ = {
 			isa = PBXGroup;
 			children = (
+				A1A1506026671CDC00FE0A5D /* XZAlertActionConfig.h */,
+				A1A1506126671CDC00FE0A5D /* XZAlertActionConfig.m */,
 				A11143E7264D165800FE91DD /* XZAlertActionHeader.h */,
+				A1A1505D266646E900FE0A5D /* XZAlertActionView.bundle */,
 				A11143E6264D165800FE91DD /* XZAlertActionView.h */,
 				A11143E8264D165800FE91DD /* XZAlertActionView.m */,
 				A11143E5264D165800FE91DD /* XZAlertPopUpManage.h */,
@@ -187,6 +195,7 @@
 				A11143C6264D115C00FE91DD /* LaunchScreen.storyboard in Resources */,
 				A11143C3264D115C00FE91DD /* Assets.xcassets in Resources */,
 				A11143C1264D115900FE91DD /* Main.storyboard in Resources */,
+				A1A1505E266646E900FE0A5D /* XZAlertActionView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +254,7 @@
 				A11143EA264D165800FE91DD /* XZAlertActionView.m in Sources */,
 				A11143F1264D3AFE00FE91DD /* CustomView.m in Sources */,
 				A11143EB264D165800FE91DD /* XZAlertPopUpManage.m in Sources */,
+				A1A1506226671CDC00FE0A5D /* XZAlertActionConfig.m in Sources */,
 				A11143BB264D115900FE91DD /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -28,7 +28,7 @@ static XZAlertPopUpManage *_alertPopUpManage = nil;
     return _alertPopUpManage;
 }
 
-- (void)setPriorityFollowingUnDisplay:(XZDisplayPriority)priorityFollowingUnDisplay {
+- (void)setPriorityFollowingUnDisplay:(NSInteger)priorityFollowingUnDisplay {
     [self willChangeValueForKey:@"priorityFollowingUnDisplay"];
     _priorityFollowingUnDisplay = priorityFollowingUnDisplay;
     [self didChangeValueForKey:@"priorityFollowingUnDisplay"];
@@ -99,7 +99,7 @@ static XZAlertPopUpManage *_alertPopUpManage = nil;
     return [XZAlertPopUpManage sharedAlertPopUpManage].alertActionList.count;
 }
 
-+ (void)removablePopupView:(XZDisplayPriority)displayPriority {
++ (void)removablePopupView:(NSInteger)displayPriority {
     XZAlertActionView *currentAlertActionView = nil;
 //    NSLog(@"移除前===============%lu",(unsigned long)[XZAlertPopUpManage sharedAlertPopUpManage].alertActionList.count);
     for (NSInteger i = [XZAlertPopUpManage sharedAlertPopUpManage].alertActionList.count - 1; i >= 0; i--) {

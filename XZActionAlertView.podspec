@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "XZActionAlertView"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.4"
   spec.summary      = "弹窗组件"
 
   # This description is used to generate tags and improve search results.

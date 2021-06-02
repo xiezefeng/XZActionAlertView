@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSMutableArray <XZAlertActionView *> *alertActionList;///<弹窗队列
 
-@property (nonatomic, assign) XZDisplayPriority priorityFollowingUnDisplay;   ///<优先级以下不展示
+@property (nonatomic, assign) NSInteger priorityFollowingUnDisplay;   ///<优先级以下不展示
 
 @property (nonatomic, assign) BOOL isShowNext;   ///<前一个弹窗结束是否继续展示下一个弹窗
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSInteger)alertActionsCount;
 
 /// 移除优先级displayPriority之下的弹窗
-+ (void)removablePopupView:(XZDisplayPriority)displayPriority;
++ (void)removablePopupView:(NSInteger)displayPriority;
 
 @end
 
